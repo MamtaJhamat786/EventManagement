@@ -1,0 +1,42 @@
+/* Default mobile styles */
+.hamburger {
+    display: inline;
+}
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.desktop-view {
+    display: none;
+}
+.mobile-view {
+    display: block;
+}
+content-view{
+    display: block;
+}
+/* Styles for larger screens */
+@media (min-width: 768px) {
+    .desktop-view {
+        width: 30%;
+        height: 100vh;
+        overflow-y: scroll;
+        display: block;
+    }
+    .content-view {
+        width: 90%;
+        display: flex;
+        flex-direction:column;
+    }
+    .hamburger {
+        display: none;
+    }
+
+
+}
