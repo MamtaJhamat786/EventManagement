@@ -29,8 +29,24 @@ const Shipments: React.FC=()=>{
     const shipment = shipmentData.find((singleShipment) => {
        return String(singleShipment.id) === String(id)
     });
+    const [inputValue, setInputValue] = useState<string>('');
 
-    console.log(id, shipment)
+    const findCargoBays =(input?: string) => {
+        const numberStrings = input?.split(',');
+        const sum = numberStrings?.reduce((accumulator, currentValue) => {
+            const numericValue = Number(currentValue.trim());
+            return accumulator + (isNaN(numericValue) ? 0 : numericValue);
+        }, 0);
+
+        const dividedResult = Number(sum) / 10; // Divide the sum by 10
+
+        const roundedResult = Math.ceil(dividedResult)
+        return roundedResult;
+    }
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=> {
+        setInputValue((event.target.value))
+        findCargoBays(event.target.value)
+    }
 
     return(
         <StyledBox>
@@ -53,7 +69,10 @@ const Shipments: React.FC=()=>{
                                     width: '70%',
                                     wordBreak: 'break-word'
                                 }}
-                                 onClick={()=> setOpenSidebar(false)}
+                                 onClick={()=> {
+                                     setInputValue('');
+                                     setOpenSidebar(false);
+                                 }}
                             >
                                 {shipment.name}
                             </Button>
@@ -62,7 +81,7 @@ const Shipments: React.FC=()=>{
                 )}
                 </Box>
             </div>
-            <Box className={openSidebar? "desktop-view" : 'content-view'}>
+            <Box className={openSidebar? "desktop-view" : 'content-view'} sx={{ width: "100%" }}>
                 <Box display="flex" flexDirection="row" justifyContent="space-between">
                     <StyledTextField
                         InputLabelProps={{
@@ -101,21 +120,14 @@ const Shipments: React.FC=()=>{
                         <StyledTypography variant="h3">{shipment?.name ?? 'Amazon.com'}</StyledTypography>
 
                         <StyledTypography sx={{color: "#979797", wordBreak: 'break-word'}}>{shipment?.email ?? 'contact@amazon.com'}</StyledTypography>
-                        <Box sx={{
-                            width: "fit-content",
-                            minWidth: "20%",
-                            padding: '10px',
-                            backgroundColor: "white",
-                            color: "#979797",
-                            border: "1px solid",
-                            borderRadius: '5px',
-                            height: "50px",
-                            lineHeight: "3.0"
-                        }}>
-                            {shipment?.boxes ?? '6.8,7.9,3.6,8.8,4.8,9.4'}
-                        </Box>
+                        <StyledTextField
+                            fullWidth
+                            variant="outlined"
+                            value={inputValue !== '' ? inputValue : shipment?.boxes}
+                            onChange={handleInputChange}
+                        />
                         <StyledTypography variant="h5" sx={{ color: "#979797"}} >Number of required crago bays</StyledTypography>
-                        <StyledTypography variant="h3"> {shipment?.boxes.split(",").length ?? 6}</StyledTypography>
+                        <StyledTypography variant="h3"> {findCargoBays(inputValue !== '' ? inputValue : shipment?.boxes) ?? findCargoBays("6.8,7.9,3.6,8.8,4.8,9.4")}</StyledTypography>
                     </Box>
                 </Box>
             </Box>

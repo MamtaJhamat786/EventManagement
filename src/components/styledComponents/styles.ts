@@ -8,7 +8,6 @@ export const StyledBox = styled(Box)`
   background-color: black;
   height: 100vh;
   overflow-y: scroll;
-  width: auto;
   display: flex;
   flex-direction: row;
   padding: 20px;
