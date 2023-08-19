@@ -13,13 +13,13 @@ export const StyledBox = styled(Box)`
   padding: 20px;
 `;
 export const StyledTextField = styled(TextField)`
-  width: 40%;
+  width: 55%;
   & .${outlinedInputClasses.root} {
     width: 100%;
-    background-color: white;
+    background-color: red;
+    border-radius: 20px;
   }
   & .${outlinedInputClasses.input} {
     background-color: white;
-    border-radius: 5px;
   }
 `;
