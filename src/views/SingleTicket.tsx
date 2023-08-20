@@ -5,22 +5,23 @@ import CardMedia from "@mui/material/CardMedia";
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 
 import CalendarTodayRoundedIcon from '@mui/icons-material/CalendarTodayRounded';
-import {useGetTopList} from "../apis/useGetTopList";
+
 import {useParams} from "react-router-dom";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import {addItemToBag} from "../store/active/reducer";
 import {useAppDispatch, useAppSelector} from "../store";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import {useGetAllEvents} from "../apis/useGetAllEvents";
 
 const SingleTicket: React.FC=()=>{
-    const  topList = useGetTopList()
+    const  events = useGetAllEvents()
     const { id } = useParams();
     const mobileView = useMediaQuery('(max-width:600px)');
    const item= useAppSelector((s)=> s.active.itemsInBag)
     const dispatch = useAppDispatch()
-    console.log(item)
-    const singleTicket=  topList.filter((pilet)=> Number(pilet.id) === Number(id))[0];
-    console.log(singleTicket)
+
+    const singleTicket=  events.filter((pilet)=> Number(pilet.id) === Number(id))[0];
+
 
     return(
         <Box

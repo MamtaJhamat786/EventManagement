@@ -10,7 +10,6 @@ import {useAppDispatch, useAppSelector} from "../store";
 import {setSearchValue} from "../store/active/reducer";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MenuIcon from '@mui/icons-material/Menu';
-import Events from "./Events";
 export const NavBar :React.FC =()=> {
     const item= useAppSelector((s)=> s.active.itemsInBag)
     const dispatch = useAppDispatch()
