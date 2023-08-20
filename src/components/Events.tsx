@@ -20,24 +20,41 @@ const Events: React.FC=()=>{
     return(
         <Box display='flex' gap='10px' width='inherit' flexDirection='column' sx={{marginTop: '15px', backgroundColor: 'white', padding: '10px'}}>
             <Typography variant="h6" fontWeight='700' display='flex'>Muusikasündmused</Typography>
-            <Box display='flex' gap='10px' flexWrap='wrap' flexDirection='row' sx={{overflowX: 'scroll'}} >
+            <Box display='flex' gap='10px' flexWrap='wrap' flexDirection={mobileView ? 'column': 'row'} sx={{overflowX: 'scroll'}} >
                 {filteredEvents.map((event)=>{
                     return(
                         <Link to={`/events/${event.id}`}  key={event.id} style={{textDecoration: 'none'}}>
-                            <Card  sx={{ width:  mobileView ? '160px':'220px',  height: '99%' }} key={event.id}>
+                            <Card
+                                sx={{
+                                    width:  mobileView ? '100%': '220px',
+                                    height: '99%',
+                                    display: mobileView ? 'flex': '',
+                                    }}
+                                key={event.id}>
                                 <CardMedia
                                     component="img"
                                     alt="green iguana"
                                     height="140"
+                                    sx={{
+                                        height: mobileView ?  'auto' : '99',
+                                        width:mobileView ? '100px': '100%'
+                                        }}
                                     src={`https://api.intra.piletilevi.ee${event.image}`}
                                 />
                                 <CardContent>
-                                    <Typography gutterBottom fontSize='16px'>
-                                        {new Date(event?.date).toLocaleString('default', { weekday: 'short' })} {new Date(event?.date)?.getDate()}.{new Date(event?.date).toLocaleString('default', { month: 'long' })}
+                                    <Box display='flex' flexDirection={ mobileView ? 'column-reverse': 'column'} >
+                                        <Typography gutterBottom fontSize='16px'>
+                                            {new Date(event?.date).toLocaleString('default', { weekday: 'short' })} {new Date(event?.date)?.getDate()}.{new Date(event?.date).toLocaleString('default', { month: 'long' })}
+                                        </Typography>
+                                        <Typography  fontSize='20px' fontWeight='700px'>
+                                            {event?.title ?? ''}
+                                        </Typography>
+                                    </Box>
+                                    {mobileView && (
+                                        <Typography fontSize='16px' fontWeight='700px'>
+                                        {event?.location ?? ''}
                                     </Typography>
-                                    <Typography gutterBottom fontSize='20px' fontWeight='700px'>
-                                        {event?.title ?? ''}
-                                    </Typography>
+                                    )}
                                 </CardContent>
                             </Card>
                         </Link>
